@@ -1,0 +1,11 @@
+python main.py \
+--device=gpus \
+--gpus=1,2 \
+--model=VGG \
+--model-version=11 \
+--dataset=CIFAR10 \
+--train-bsz=64 \
+--test-bsz=64 \
+--lr=0.01 \
+--optim=SGD \
+--epochs=100
