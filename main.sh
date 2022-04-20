@@ -1,11 +1,12 @@
 python main.py \
 --device=gpus \
---gpus=1,2 \
---model=VGG \
---model-version=11 \
---dataset=CIFAR10 \
---train-bsz=64 \
---test-bsz=64 \
+--gpus=0,1,2 \
+--model=ResNet \
+--model-version=18 \
+--dataset=TinyImageNet \
+--train-bsz=100 \
+--test-bsz=100 \
 --lr=0.01 \
+--lr-decay=1 \
 --optim=SGD \
---epochs=100
+--epochs=50

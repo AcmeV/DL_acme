@@ -11,10 +11,11 @@ def load_log(path):
     log = pd.read_csv(path)
     epochs, accs, losses = [], [], []
 
-    for i in range(len(log['Epoch'])):
+    # for i in range(len(log['Epoch'])):
+    for i in range(50):
         epochs.append(log['Epoch'][i])
-        accs.append(log['Acc'][i])
-        losses.append(log['Loss'][i])
+        accs.append(float(log['TestAcc'][i]))
+        losses.append(float(log['TestLoss'][i]))
 
     return epochs, accs, losses
 
@@ -69,8 +70,8 @@ def plot_diff_lr():
     loss_plot(epochs, losses, colors, labels, loss_title)
 
 def plot_diff_model():
-    acc_title = 'Accuracy comparision of diffrent model\nlr: 0.01 | dataset: MNIST'
-    loss_title = 'Loss comparision of diffrent model\nlr: 0.01 | dataset: MNIST'
+    acc_title = 'Accuracy comparision of diffrent model\nlr: 0.01 | dataset: CIFAR10'
+    loss_title = 'Loss comparision of diffrent model\nlr: 0.01 | dataset: CIFAR10'
 
     dataset = 'mnist'
 
@@ -91,7 +92,42 @@ def plot_diff_model():
     acc_plot(epochs, accs, colors, labels, acc_title)
     loss_plot(epochs, losses, colors, labels, loss_title)
 
+def plot_diff_eff_model(decay=0):
+    colors = ['green',
+              # 'steelblue',
+              'orange',
+              'red',
+              'purple'
+              ]
+    labels = ['AlexNet',
+              'VGG11',
+              # 'NiN',
+              # 'GoogLeNet',
+              'ResNet18']
+    paths = [
+        f'./logs/Log_AlexNet_CIFAR10_lr-0.01_decay-{decay}.csv',
+        f'./logs/Log_VGG11_CIFAR10_lr-0.01_decay-{decay}.csv',
+        # f'./logs/Log_NiN_CIFAR10_lr-0.01_decay-{decay}.csv',
+        # f'./logs/Log_GoogLeNet_CIFAR10_lr-0.01_decay-{decay}.csv',
+        f'./logs/Log_ResNet18_CIFAR10_lr-0.01_decay-{decay}.csv',
+    ]
+    ifdecay = 'no decay' if decay == 0 else 'decay'
+    acc_title = f'Accuracy comparision of diffrent model\nlr: 0.01({ifdecay}) | dataset: MNIST'
+    loss_title = f'Loss comparision of diffrent model\nmodel: 0.01({ifdecay}) | dataset: MNIST'
+
+    epochs, accs, losses = [], [], []
+    for i in range(len(paths)):
+        epoch, acc, loss = load_log(paths[i])
+        epochs.append(epoch)
+        accs.append(acc)
+        losses.append(loss)
+
+    acc_plot(epochs, accs, colors, labels, acc_title)
+    loss_plot(epochs, losses, colors, labels, loss_title)
 
 if __name__ == '__main__':
-    plot_diff_lr()
+    # plot_diff_lr()
     # plot_diff_model()
+
+    decay = 1
+    plot_diff_eff_model(decay)
