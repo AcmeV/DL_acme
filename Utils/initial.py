@@ -1,10 +1,8 @@
 import torch
-import torchvision
-
 import models
+import torchvision
 from config.config import config
 from Utils.dataset.TinyImageNet import TinyImageNet
-
 
 
 def init_model(args):
@@ -29,32 +27,33 @@ def init_dataset(args):
                                                download=True, transform=torchvision.transforms.ToTensor())
     elif args.dataset == 'TinyImageNet':
         # 模拟 3 * 224 * 224
-        # normalize = torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406],
-        #                                  std=[0.229, 0.224, 0.225])
-        # transform = torchvision.transforms.Compose([
-        #     torchvision.transforms.RandomSizedCrop(224),
-        #     torchvision.transforms.RandomHorizontalFlip(),
-        #     torchvision.transforms.ToTensor(),
-        #     normalize])
+        # transforms_train = torchvision.transforms.transforms.Compose([
+        #     torchvision.transforms.transforms.Resize((224, 224)),
+        #     torchvision.transforms.transforms.RandomHorizontalFlip(),
+        #     torchvision.transforms.transforms.ToTensor(),
+        #     torchvision.transforms.transforms.Normalize([0.4802, 0.4481, 0.3975], [0.2302, 0.2265, 0.2262]),
+        #     torchvision.transforms.transforms.RandomErasing(p=0.5, scale=(0.06, 0.08), ratio=(1, 3), value=0, inplace=True)
+        # ])
+        #
+        # transforms_val = torchvision.transforms.transforms.Compose([
+        #     torchvision.transforms.transforms.Resize((224, 224)),
+        #     torchvision.transforms.transforms.ToTensor(),
+        #     torchvision.transforms.transforms.Normalize([0.4802, 0.4481, 0.3975], [0.2302, 0.2265, 0.2262])
+        # ])
 
         # 自定义Dataset
-        # transform = torchvision.transforms.ToTensor()
-        #
-        # train_data = TinyImageNet(f'{args.data_dir}/tiny-imagenet', transform=transform, train=True)
-        # test_data = TinyImageNet(f'{args.data_dir}/tiny-imagenet', transform=transform, train=False)
+        transform = torchvision.transforms.Compose([torchvision.transforms.ToTensor()])
 
-        transform = torchvision.transforms.Compose([
-            torchvision.transforms.ToTensor(),
-            torchvision.transforms.Normalize(mean=[0.4802, 0.4481, 0.3975],
-                                             std=[0.2302, 0.2265, 0.2262])
-        ])
+        train_data = TinyImageNet(f'{args.data_dir}', transform=transform, train=True)
+        test_data = TinyImageNet(f'{args.data_dir}', transform=transform, train=False)
 
-        train_data = torchvision.datasets.ImageFolder(
-            root=f'{args.data_dir}/TinyImageNet/train',transform=transform)
-        test_data = torchvision.datasets.ImageFolder(
-            root=f'{args.data_dir}/TinyImageNet/val',transform=transform)
+        # load dataset in my handle
+        # train_data = torchvision.datasets.ImageFolder(
+        #     root=f'{args.data_dir}/TinyImageNet/train',transform=transform)
+        # test_data = torchvision.datasets.ImageFolder(
+        #     root=f'{args.data_dir}/TinyImageNet/val',transform=transform)
 
-    train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=False)
+    train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=True)
     test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
 
     return train_loader, test_loader

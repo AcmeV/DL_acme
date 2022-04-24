@@ -11,10 +11,7 @@ class NN_CIFAR10(BaseModel):
 
     def forward(self, x):
         x = x.view(-1, 32 * 32 * 3)
-        print(x.shape)
         x = f.relu(self.fc1(x))
-        print(x.shape)
         x = f.dropout(x, training=self.training)
         x = self.fc2(x)
-        print(x.shape)
         return f.log_softmax(x, dim=1)

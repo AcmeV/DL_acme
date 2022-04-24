@@ -10,7 +10,7 @@ class AlexNet_CIFAR10(BaseModel):
         super(AlexNet_CIFAR10, self).__init__()
 
         self.alex_net = nn.Sequential(
-            nn.Conv2d(3, 96, kernel_size=11, stride=1, padding=5), nn.ReLU(),
+            nn.Conv2d(3, 96, kernel_size=7, stride=1, padding=3), nn.ReLU(),
             nn.MaxPool2d(kernel_size=3, stride=2, padding=1),
             nn.Conv2d(96, 256, kernel_size=5, padding=2), nn.ReLU(),
             nn.MaxPool2d(kernel_size=3, stride=2, padding=1),
@@ -23,9 +23,5 @@ class AlexNet_CIFAR10(BaseModel):
             nn.Linear(4096, 10))
 
     def forward(self, x):
-        # for layer in self.alex_net:
-        #     x = layer(x)
-        #     print(layer.__class__.__name__, f'Output shape: {x.shape}')
-
         x = self.alex_net(x)
         return f.log_softmax(x, dim=1)

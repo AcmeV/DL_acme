@@ -23,9 +23,5 @@ class AlexNet_TinyImageNet(BaseModel):
             nn.Linear(4096, 200))
 
     def forward(self, x):
-        # for layer in self.alex_net:
-        #     x = layer(x)
-        #     print(layer.__class__.__name__, f'Output shape: {x.shape}')
-
         x = self.alex_net(x)
         return f.log_softmax(x, dim=1)

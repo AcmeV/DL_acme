@@ -10,9 +10,11 @@ class NiNBlock(BaseModel):
         self.nin_block = nn.Sequential(
             nn.Conv2d(in_channel, out_channel, kernel_size = kernel_size,
                       stride=stride, padding=padding),
-            nn.ReLU(), nn.Conv2d(out_channel, out_channel, kernel_size=1),
-            nn.ReLU(), nn.Conv2d(out_channel, out_channel, kernel_size=1),
-            nn.ReLU())
+            nn.BatchNorm2d(out_channel), nn.ReLU(),
+            nn.Conv2d(out_channel, out_channel, kernel_size=1),
+            nn.BatchNorm2d(out_channel), nn.ReLU(),
+            nn.Conv2d(out_channel, out_channel, kernel_size=1),
+            nn.BatchNorm2d(out_channel), nn.ReLU())
 
     def forward(self, x):
 

@@ -44,10 +44,5 @@ class GoogLeNet_TinyImageNet(BaseModel):
                                  stage5 , nn.Linear(1024, 200))
 
     def forward(self, x):
-        # for debug
-        # for layer in self.goog_lenet:
-        #     x = layer(x)
-        #     print(layer.__class__.__name__, f'Output shape: {x.shape}')
-
         x = self.goog_lenet(x)
         return x

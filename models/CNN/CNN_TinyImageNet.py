@@ -14,9 +14,5 @@ class CNN_TinyImageNet(BaseModel):
         )
 
     def forward(self, x):
-        # for layer in self.cnn:
-        #     x = layer(x)
-        #     print(layer.__class__.__name__, f'Output shape: {x.shape}')
-
         x = self.cnn(x)
         return f.log_softmax(x, dim=1)

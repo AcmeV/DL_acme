@@ -24,11 +24,6 @@ class VGG_CIFAR10(BaseModel):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-        # for debug
-        # for layer in self.vgg_net:
-        #     x = layer(x)
-        #     print(layer.__class__.__name__, f'Output shape: {x.shape}')
-
         x = self.vgg_net(x)
 
         return f.log_softmax(x, dim=1)

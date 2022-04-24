@@ -1,15 +1,16 @@
-import csv
 import os
+import csv
 import time
 import argparse
 
 import torch
+import tqdm
 import torchvision
 from torch import optim, nn
 from torch.autograd import Variable
 
-from Utils.test import test_model, AverageMeter, accuracy
 from Utils.initial import init_model, init_dataset
+from Utils.test import test_model, AverageMeter, accuracy
 
 parser = argparse.ArgumentParser()
 # System settings
@@ -22,17 +23,17 @@ parser.add_argument('--gpus', type=str, default='0,1,2,3',
                     help='ID of GPUs to use, eg. 1,3')
 
 # Model
-parser.add_argument('--model', type=str, default='CNN',
+parser.add_argument('--model', type=str, default='ResNet',
                     choices=('NN', 'CNN', 'AlexNet', 'NiN', 'VGG',
                              'GoogLeNet', 'ResNet', 'SEResNet'))
-parser.add_argument('--model-version', type=int, default=11,
+parser.add_argument('--model-version', type=int, default=18,
                     choices=(18, 34, 50, 101, 152,
                              11, 13, 16, 19),
                     help='version for ResNet or VGG,'
                          '(18, 34, 50, 101, 152) is for ResNet,'
                          '(11, 13, 16, 19) is for VGG')
 # Dataset
-parser.add_argument('--dataset', type=str, default='CIFAR10',
+parser.add_argument('--dataset', type=str, default='MNIST',
                     choices=('MNIST', 'CIFAR10', 'TinyImageNet'))
 parser.add_argument('--train-bsz', type=int, default=128)
 parser.add_argument('--test-bsz', type=int, default=128)
@@ -56,17 +57,13 @@ if __name__ == '__main__':
         gpus = [0]
     device = torch.device(f'cuda:{gpus[0]}' if args.device != 'cpu'
                     and torch.cuda.is_available() else "cpu")
+    model_name = args.model
+    if 'ResNet' in args.model or args.model == 'VGG':
+        model_name = f'{args.model}{args.model_version}'
 
-    if args.model != 'ResNet' and args.model != 'SEResNet' and args.model != 'VGG':
-        print(f'model: {args.model} | dataset: {args.dataset} | lr: {args.lr}(decay: {args.lr_decay}) | device: {device}\n')
+    print(f'model: {model_name} | dataset: {args.dataset} | lr: {args.lr}(decay: {args.lr_decay}) | device: {device}\n')
 
-        log_file = open(f'{args.log_dir}/Log_{args.model}_{args.dataset}_lr-{args.lr}_decay-{args.lr_decay}.csv',
-                        "w", newline='')
-    else:
-        print(f'model: {args.model}-{args.model_version} | dataset: {args.dataset} | lr: {args.lr}(decay: {args.lr_decay}) | device: {device}\n')
-
-        log_file = open(f'{args.log_dir}/Log_{args.model}{args.model_version}_{args.dataset}_lr-{args.lr}_decay-{args.lr_decay}.csv',
-                        "w", newline='')
+    log_file = open(f'{args.log_dir}/Log_{model_name}_{args.dataset}_lr-{args.lr}_decay-{args.lr_decay}.csv', "w", newline='')
     log_writer = csv.writer(log_file)
     log_writer.writerow(['Epoch', 'TrainAcc', 'TrainLoss', 'TestAcc', 'TestLoss', 'Time'])
     log_file.flush()
@@ -74,7 +71,7 @@ if __name__ == '__main__':
 
     ################################ Param Init ######################################
     model = init_model(args)
-
+    models = []
     # model = torchvision.models.resnet18(pretrained=True)
 
     train_data, test_data = init_dataset(args)
@@ -92,13 +89,9 @@ if __name__ == '__main__':
 
     loss_func = nn.CrossEntropyLoss() # CrossEntropy Loss Function
 
-    if args.device != 'cpu': # parallel trainning mode
+    if args.device != 'cpu' and torch.cuda.is_available(): # parallel trainning mode
         model = model.cuda()
         model = torch.nn.DataParallel(model, device_ids=gpus)
-
-    # correct, acc, test_loss = test_model(model, test_data, device, loss_func)
-    # test_len = len(test_data.dataset)
-    # print(f'Init model test |  test loss: {test_loss} | acc: {acc}%({correct} / {test_len})\n')
     ##################################################################################
 
     ################################ Trainning Section ###############################
@@ -115,7 +108,7 @@ if __name__ == '__main__':
 
         start_t = time.time()
 
-        for batch_idx, (inputs, targets) in enumerate(train_data):
+        for inputs, targets in tqdm.tqdm(train_data, ncols=50):
             inputs, targets = Variable(inputs).to(device), Variable(targets).to(device)
             outputs = model(inputs)
             loss = loss_func(outputs, targets)
@@ -127,9 +120,6 @@ if __name__ == '__main__':
             prec1 = accuracy(outputs.data, targets, topk=(1, ))
             losses.update(loss.item(), inputs.size(0))
             top1.update(prec1[0].item(), inputs.size(0))
-
-            if batch_idx % 200 == 0:
-                print(f'epoch: {epoch} | batch: {batch_idx}')
 
         ############### norm for trainning set ###########################
         train_loss = losses.val

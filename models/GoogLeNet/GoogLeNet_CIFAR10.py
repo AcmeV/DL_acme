@@ -13,7 +13,7 @@ class GoogLeNet_CIFAR10(BaseModel):
 
         stage1 = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=5, stride=2, padding=2),
-            nn.ReLU(), nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
+            nn.BatchNorm2d(64), nn.ReLU(), nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
 
         stage2 = nn.Sequential(
             nn.Conv2d(64, 64, kernel_size=1), nn.ReLU(),
@@ -42,10 +42,5 @@ class GoogLeNet_CIFAR10(BaseModel):
                                  stage5 , nn.Linear(1024, 10))
 
     def forward(self, x):
-        # for debug
-        # for layer in self.goog_lenet:
-        #     x = layer(x)
-        #     print(layer.__class__.__name__, f'Output shape: {x.shape}')
-
         x = self.goog_lenet(x)
-        return f.log_softmax(x, dim=1)
+        return x

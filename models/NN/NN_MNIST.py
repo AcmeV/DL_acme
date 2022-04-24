@@ -3,7 +3,7 @@ import torch.nn.functional as f
 from models.BaseModel import BaseModel
 
 class NN_MNIST(BaseModel):
-    """ CNN Network architecture. """
+    """ NN Network architecture. """
     def __init__(self):
         super(NN_MNIST, self).__init__()
         self.fc1 = nn.Linear(28 * 28, 50)

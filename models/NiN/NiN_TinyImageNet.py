@@ -25,9 +25,5 @@ class NiN_TinyImageNet(BaseModel):
             nn.Flatten())
 
     def forward(self, x):
-        # for layer in self.nin_net:
-        #     x = layer(x)
-        #     print(layer.__class__.__name__, f'Output shape: {x.shape}')
-
         x = self.nin_net(x)
         return f.log_softmax(x, dim=1)

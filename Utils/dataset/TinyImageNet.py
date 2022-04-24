@@ -1,15 +1,23 @@
 import os
 import sys
 import shutil
+import zipfile
 
+import requests
 from PIL import Image
 from torch.utils.data import Dataset
+from tqdm import tqdm
+
 
 class TinyImageNet(Dataset):
     def __init__(self, root, train=True, transform=None):
         self.train = train
-        self.root_dir = root
+        self.root = root
+        self.root_dir = f'{root}/TinyImageNet'
         self.transform = transform
+        if not os.path.exists(f'{self.root_dir}'):
+            self._download()
+            self._zip()
         self.train_dir = os.path.join(self.root_dir, 'train')
         self.val_dir = os.path.join(self.root_dir, 'val')
 
@@ -103,6 +111,27 @@ class TinyImageNet(Dataset):
                         else:
                             item = (path, self.class_to_tgt_idx[self.val_img_to_class[fname]])
                         self.imgs.append(item)
+
+    def _download(self):
+        url = 'http://cs231n.stanford.edu/tiny-imagenet-200.zip'
+        name = url.split("/")[-1]
+        resp = requests.get(url, stream=True)
+        content_size = int(resp.headers['Content-Length']) / 1024  # 确定整个安装包的大小
+        # 下载到该目录
+        path = f'{self.root}/{name}'
+        with open(path, "wb") as file:
+            for data in tqdm(iterable=resp.iter_content(1024), total=int(content_size), unit='kb', desc='downloading...'):
+                file.write(data)
+        print("finish download TinyImageNet.zip\n\n")
+
+    def _zip(self):
+        zFile = zipfile.ZipFile(f'{self.root}/tiny-imagenet-200.zip', "r")
+        for fileM in tqdm(zFile.namelist(), unit='file', desc='ziping...'):
+            zFile.extract(fileM, path=f'{self.root}')
+        zFile.close()
+        os.rename(f'{self.root}/tiny-imagenet-200', f'{self.root}/TinyImageNet')
+        print("finish zip TinyImageNet.zip\n\n")
+        os.remove(f'{self.root}/tiny-imagenet-200')
 
     def return_label(self, idxs):
         return [self.class_to_label[self.tgt_idx_to_class[idx.item()]] for idx in idxs]
