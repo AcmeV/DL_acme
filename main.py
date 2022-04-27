@@ -29,7 +29,7 @@ parser.add_argument('--model-version', type=int, default=18,
 # Dataset
 parser.add_argument('--dataset', type=str, default='MNIST',
                     choices=('MNIST', 'CIFAR10', 'TinyImageNet',
-                             'TimeMachine'))
+                             'TimeMachine', 'FunctionValue'))
 parser.add_argument('--train-bsz', type=int, default=128)
 parser.add_argument('--test-bsz', type=int, default=128)
 
