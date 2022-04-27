@@ -3,28 +3,26 @@ import math
 from torch import nn
 
 from models.BaseModel import BaseModel
-from models.block.residual.BasicBlock import BasicBlock
-from models.block.residual.Bottleneck import Bottleneck
-from models.block.residual.SE_BasicBlock import SE_BasicBlock
-from models.block.residual.SE_Bottleneck import SE_Bottleneck
+from models.cnn_models.block.residual.BasicBlock import BasicBlock
+from models.cnn_models.block import Bottleneck
+from models.cnn_models.block.residual.SE_BasicBlock import SE_BasicBlock
+from models.cnn_models.block.residual.SE_Bottleneck import SE_Bottleneck
 
-
-class ResNets_TinyImageNet(BaseModel):
+class ResNets_CIFAR10(BaseModel):
 
     def __init__(self, block, layers):
+        num_classes = 10
         self.inplanes = 64
-        num_classes = 200
 
-        super(ResNets_TinyImageNet, self).__init__()
-        self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False)
+        super(ResNets_CIFAR10, self).__init__()
+        self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(64)
         self.relu = nn.ReLU(inplace=True)
-        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.layer1 = self._make_layer(block, 64, layers[0])
         self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
         self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
-        self.avgpool = nn.AvgPool2d(2)
+        self.avgpool = nn.AvgPool2d(4)
         self.fc = nn.Linear(512 * block.expansion, num_classes)
 
         for m in self.modules():
@@ -56,7 +54,6 @@ class ResNets_TinyImageNet(BaseModel):
         x = self.conv1(x)
         x = self.bn1(x)
         x = self.relu(x)
-        x = self.maxpool(x)
 
         x = self.layer1(x)
         x = self.layer2(x)
@@ -69,92 +66,92 @@ class ResNets_TinyImageNet(BaseModel):
 
         return x
 
-def ResNet18_TinyImageNet():
+def ResNet18_CIFAR10():
     """Constructs a SE-ResNet-18 model.
 
         Args:
-            num_classes = 200 (default)
+            num_classes = 10 (default)
         """
-    model = ResNets_TinyImageNet(BasicBlock, [2, 2, 2, 2])
+    model = ResNets_CIFAR10(BasicBlock, [2, 2, 2, 2])
     return model
 
-def ResNet34_TinyImageNet():
+def ResNet34_CIFAR10():
     """Constructs a SE-ResNet-34 model.
 
         Args:
-            num_classes = 200 (default)
+            num_classes = 10 (default)
         """
-    model = ResNets_TinyImageNet(BasicBlock, [3, 4, 6, 3])
+    model = ResNets_CIFAR10(BasicBlock, [3, 4, 6, 3])
     return model
 
-def ResNet50_TinyImageNet():
+def ResNet50_CIFAR10():
     """Constructs a SE-ResNet-50 model.
 
     Args:
-        num_classes = 200 (default)
+        num_classes = 10 (default)
     """
-    model = ResNets_TinyImageNet(Bottleneck, [3, 4, 6, 3])
+    model = ResNets_CIFAR10(Bottleneck, [3, 4, 6, 3])
     return model
 
-def ResNet101_TinyImageNet():
+def ResNet101_CIFAR10():
     """Constructs a SE-ResNet-101 model.
 
     Args:
-        num_classes = 200 (default)
+        num_classes = 10 (default)
     """
-    model = ResNets_TinyImageNet(Bottleneck, [3, 4, 23, 3])
+    model = ResNets_CIFAR10(Bottleneck, [3, 4, 23, 3])
     return model
 
-def ResNet152_TinyImageNet():
+def ResNet152_CIFAR10():
     """Constructs a SE-ResNet-152 model.
 
     Args:
-        num_classes = 200 (default)
+        num_classes = 10 (default)
     """
-    model = ResNets_TinyImageNet(Bottleneck, [3, 8, 36, 3])
+    model = ResNets_CIFAR10(Bottleneck, [3, 8, 36, 3])
     return model
 
-def SEResNet18_TinyImageNet():
+def SEResNet18_CIFAR10():
     """Constructs a SE-ResNet-18 model.
 
         Args:
-            num_classes = 200 (default)
+            num_classes = 10 (default)
         """
-    model = ResNets_TinyImageNet(SE_BasicBlock, [2, 2, 2, 2])
+    model = ResNets_CIFAR10(SE_BasicBlock, [2, 2, 2, 2])
     return model
 
-def SEResNet34_TinyImageNet():
+def SEResNet34_CIFAR10():
     """Constructs a SE-ResNet-34 model.
 
         Args:
-            num_classes = 200 (default)
+            num_classes = 10 (default)
         """
-    model = ResNets_TinyImageNet(SE_BasicBlock, [3, 4, 6, 3])
+    model = ResNets_CIFAR10(SE_BasicBlock, [3, 4, 6, 3])
     return model
 
-def SEResNet50_TinyImageNet():
+def SEResNet50_CIFAR10():
     """Constructs a SE-ResNet-50 model.
 
     Args:
-        num_classes = 200 (default)
+        num_classes = 10 (default)
     """
-    model = ResNets_TinyImageNet(SE_Bottleneck, [3, 4, 6, 3])
+    model = ResNets_CIFAR10(SE_Bottleneck, [3, 4, 6, 3])
     return model
 
-def SEResNet101_TinyImageNet():
+def SEResNet101_CIFAR10():
     """Constructs a SE-ResNet-101 model.
 
     Args:
-        num_classes = 200 (default)
+        num_classes = 10 (default)
     """
-    model = ResNets_TinyImageNet(SE_Bottleneck, [3, 4, 23, 3])
+    model = ResNets_CIFAR10(SE_Bottleneck, [3, 4, 23, 3])
     return model
 
-def SEResNet152_TinyImageNet():
+def SEResNet152_CIFAR10():
     """Constructs a SE-ResNet-152 model.
 
     Args:
-        num_classes = 200 (default)
+        num_classes = 10 (default)
     """
-    model = ResNets_TinyImageNet(SE_Bottleneck, [3, 8, 36, 3])
+    model = ResNets_CIFAR10(SE_Bottleneck, [3, 8, 36, 3])
     return model

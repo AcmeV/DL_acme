@@ -2,7 +2,7 @@ from torch import  nn
 
 from models.BaseModel import BaseModel
 
-from models.block.inception.InceptionBlock import InceptionBlock
+from models.cnn_models.block.inception.InceptionBlock import InceptionBlock
 
 
 class GoogLeNet_TinyImageNet(BaseModel):

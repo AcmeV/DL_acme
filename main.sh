@@ -1,12 +1,13 @@
 python main.py \
 --device=gpus \
 --gpus=0 \
---model=VGG \
+--model-type=rnn \
+--model=MyRNN \
 --model-version=11 \
---dataset=TinyImageNet \
---train-bsz=50 \
---test-bsz=50 \
---lr=0.01 \
---lr-decay=1 \
+--dataset=TimeMachine \
+--train-bsz=32 \
+--test-bsz=32 \
+--lr=1 \
+--lr-decay=0 \
 --optim=SGD \
---epochs=50
+--epochs=500

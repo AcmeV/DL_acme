@@ -1,9 +1,8 @@
 from torch import  nn
 
 from models.BaseModel import BaseModel
-import torch.nn.functional as f
 
-from models.block.inception.InceptionBlock import InceptionBlock
+from models.cnn_models.block.inception.InceptionBlock import InceptionBlock
 
 
 class GoogLeNet_CIFAR10(BaseModel):

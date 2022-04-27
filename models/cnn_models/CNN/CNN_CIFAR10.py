@@ -14,5 +14,4 @@ class CNN_CIFAR10(BaseModel):
         )
 
     def forward(self, x):
-        x = self.cnn(x)
         return f.log_softmax(x, dim=1)

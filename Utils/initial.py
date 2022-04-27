@@ -1,6 +1,14 @@
+import csv
+import os
+import random
+
 import torch
 import models
 import torchvision
+import numpy as np
+
+from Utils.dataset.FunctionValue import FunctionValue, gen_function_value
+from Utils.dataset.TimeMachine import load_data_time_machine
 from config.config import config
 from Utils.dataset.TinyImageNet import TinyImageNet
 
@@ -20,11 +28,19 @@ def init_dataset(args):
                                                 download=True, transform=torchvision.transforms.ToTensor())
         test_data = torchvision.datasets.MNIST(root=f'{args.data_dir}', train=False,
                                                download=True, transform=torchvision.transforms.ToTensor())
+        train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=True)
+        test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
+
+        return train_loader, test_loader
     elif args.dataset == 'CIFAR10':
         train_data = torchvision.datasets.CIFAR10(root=f'{args.data_dir}', train=True,
                                                 download=True, transform=torchvision.transforms.ToTensor())
         test_data = torchvision.datasets.CIFAR10(root=f'{args.data_dir}', train=False,
                                                download=True, transform=torchvision.transforms.ToTensor())
+        train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=True)
+        test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
+
+        return train_loader, test_loader
     elif args.dataset == 'TinyImageNet':
         # 模拟 3 * 224 * 224
         # transforms_train = torchvision.transforms.transforms.Compose([
@@ -47,13 +63,20 @@ def init_dataset(args):
         train_data = TinyImageNet(f'{args.data_dir}', transform=transform, train=True)
         test_data = TinyImageNet(f'{args.data_dir}', transform=transform, train=False)
 
-        # load dataset in my handle
-        # train_data = torchvision.datasets.ImageFolder(
-        #     root=f'{args.data_dir}/TinyImageNet/train',transform=transform)
-        # test_data = torchvision.datasets.ImageFolder(
-        #     root=f'{args.data_dir}/TinyImageNet/val',transform=transform)
+        train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=True)
+        test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
 
-    train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=True)
-    test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
+        return train_loader, test_loader
+    elif args.dataset == 'FunctionValue':
+        if not os.path.exists(f'{args.data_dir}/FunctionValue.csv'):
+            gen_function_value(f'{args.data_dir}/FunctionValue.csv')
+        train_data = FunctionValue(dir=f'{args.data_dir}/FunctionValue.csv', train=True, time_step=args.num_step, transform=torchvision.transforms.ToTensor())
+        test_data = FunctionValue(dir=f'{args.data_dir}/FunctionValue.csv', train=False, time_step=args.num_step, transform=torchvision.transforms.ToTensor())
+        train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=True)
+        test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
 
-    return train_loader, test_loader
+        return train_loader, test_loader
+    elif args.dataset == 'TimeMachine':
+        batch_size, num_step = int(args.train_bsz), int(args.num_step)
+        train_iter, vocab = load_data_time_machine(batch_size, num_step, args.data_dir)
+        return train_iter, vocab

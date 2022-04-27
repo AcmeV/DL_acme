@@ -1,3 +1,5 @@
+import models
+
 def config(args):
     '''
         Generate model package dict
@@ -6,17 +8,22 @@ def config(args):
     :return:
         a dict from model name to model package
     '''
-    models = ['CNN', 'NN', 'AlexNet', 'NiN', 'VGG',
+    model_type = args.model_type
+    if model_type == 'cnn':
+        models = ['CNN', 'NN', 'AlexNet', 'NiN', 'VGG',
              'GoogLeNet', 'ResNet', 'SEResNet']
+
+        datasets = ['MNIST', 'CIFAR10', 'TinyImageNet']
+    else:
+        models = ['MyRNN', 'RNN']
+        datasets = ['TimeMachine', 'FunctionValue']
 
     resnet_versions = [18, 34, 50, 101, 152]
     vgg_versions = [11, 13, 16, 19]
 
-    datasets = ['MNIST', 'CIFAR10', 'TinyImageNet']
-
     config_dict = {}
 
-    model_package = args.model_package
+    model_package = f'{args.model_package}.{model_type}_models'
 
     models_absolute = []
     relations = {}
