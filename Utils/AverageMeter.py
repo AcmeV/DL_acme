@@ -1,3 +1,5 @@
+import sklearn.metrics as metrics
+
 class AverageMeter(object):
     """Computes and stores the average and current value"""
 
@@ -15,3 +17,25 @@ class AverageMeter(object):
         self.sum += val * n
         self.count += n
         self.avg = self.sum / self.count
+
+def accuracy(output, target, topk=(1,)):
+    """Computes the precision@k for the specified values of k"""
+    maxk = max(topk)
+    batch_size = target.size(0)
+
+    _, pred = output.topk(maxk, 1, True, True)
+    pred = pred.t()
+    correct = pred.eq(target.view(1, -1).expand_as(pred))
+
+    res = []
+    for k in topk:
+        c = correct[:k].view(-1).float()
+        correct_k = correct[:k].view(-1).float().sum(0)
+        res.append(correct_k.mul_(100.0 / batch_size))
+    return res
+
+def f1_score(output, target):
+
+    _, pred = output.topk(1, dim=1)
+    f1score = metrics.f1_score(pred.cpu(), target.view(*pred.shape).long().cpu(), average='macro')
+    return f1score

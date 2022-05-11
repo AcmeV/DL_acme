@@ -3,9 +3,9 @@ from torch import nn
 from torch.nn import functional as F
 
 class RNN_TimeMachine(nn.Module):
-    def __init__(self):
+    def __init__(self, num_hiddens=512):
         super(RNN_TimeMachine, self).__init__()
-        self.num_input, self.num_hiddens = 28, 512
+        self.num_input, self.num_hiddens = 28, num_hiddens
         self.rnn_net = nn.RNN(input_size=self.num_input, num_layers=1, hidden_size=self.num_hiddens)
         self.num_directions = 1
         self.linear = nn.Linear(self.num_hiddens, self.num_input)

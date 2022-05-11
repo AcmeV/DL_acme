@@ -1,6 +1,6 @@
 import torch
 
-from Utils.AverageMeter import AverageMeter
+from Utils.AverageMeter import AverageMeter, accuracy
 
 
 def cnn_test(model, test_loader, device, loss_func):
@@ -23,20 +23,3 @@ def cnn_test(model, test_loader, device, loss_func):
     test_loss = losses.avg
 
     return acc, test_loss
-
-def accuracy(output, target, topk=(1,)):
-    """Computes the precision@k for the specified values of k"""
-    maxk = max(topk)
-    batch_size = target.size(0)
-
-    _, pred = output.topk(maxk, 1, True, True)
-    pred = pred.t()
-    correct = pred.eq(target.view(1, -1).expand_as(pred))
-
-    res = []
-    for k in topk:
-        a = correct[:k]
-        b = a.view(-1)
-        correct_k = correct[:k].view(-1).float().sum(0)
-        res.append(correct_k.mul_(100.0 / batch_size))
-    return res

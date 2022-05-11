@@ -131,7 +131,7 @@ class TinyImageNet(Dataset):
         zFile.close()
         os.rename(f'{self.root}/tiny-imagenet-200', f'{self.root}/TinyImageNet')
         print("finish zip TinyImageNet.zip\n\n")
-        os.remove(f'{self.root}/tiny-imagenet-200')
+        os.remove(f'{self.root}/tiny-imagenet-200.zip')
 
     def return_label(self, idxs):
         return [self.class_to_label[self.tgt_idx_to_class[idx.item()]] for idx in idxs]

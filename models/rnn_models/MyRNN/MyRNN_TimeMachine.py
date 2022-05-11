@@ -2,15 +2,16 @@ import torch
 from torch.nn import functional as F
 
 class MyRNN_TimeMachine:
-    def __init__(self):
-        self.num_input, self.num_hiddens  = 28, 512
+    def __init__(self, num_hiddens=512):
+        self.num_input, self.num_hiddens  = 28, num_hiddens
         self.params = self.init_params(self.num_input, self.num_hiddens)
 
     def __call__(self, inputs, state):
         inputs = F.one_hot(inputs.T, self.num_input).type(torch.float32)
         W_xh, W_hh, b_h, W_ho, b_o = self.params
 
-        H,  = state
+
+        H, = state
 
         outputs = []
         for X in inputs:
@@ -19,6 +20,7 @@ class MyRNN_TimeMachine:
             Y = torch.mm(H, W_ho) + b_o
 
             outputs.append(Y)
+
         return torch.cat(outputs, dim=0), (H, )
 
     def parameters(self):

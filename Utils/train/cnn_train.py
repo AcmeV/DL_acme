@@ -9,7 +9,8 @@ from torch.autograd import Variable
 
 from Utils import AverageMeter
 from Utils.initial import init_model, init_dataset
-from Utils.test.cnn_test import accuracy, cnn_test
+from Utils.test.cnn_test import cnn_test
+from Utils.AverageMeter import accuracy
 
 
 def cnn_train(args):
@@ -85,7 +86,7 @@ def cnn_train(args):
             top1.update(prec1[0].item(), inputs.size(0))
 
         ############### norm for trainning set ###########################
-        train_loss = losses.val
+        train_loss = losses.avg
         train_acc = top1.avg
 
         ############## norm for test set #################################

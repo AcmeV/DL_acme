@@ -29,7 +29,8 @@ class FunctionValue(Dataset):
         x = self.X[index]
         y = float(self.Y[index])
         if self.tranform != None:
-            return self.tranform(x).data.squeeze(0), torch.tensor(y).unsqueeze(0)
+            x, y = self.tranform(x).data.squeeze(0), \
+                   torch.tensor(y).unsqueeze(0).type(torch.float32)
         return x, y
 
     def __len__(self):

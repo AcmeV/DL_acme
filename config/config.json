@@ -1,0 +1,145 @@
+{
+  "NN": {
+    "MNIST": "models.cnn_models.NN.NN_MNIST",
+    "CIFAR10": "models.cnn_models.NN.NN_CIFAR10",
+    "TinyImageNet": "models.cnn_models.NN.NN_TinyImageNet"
+  },
+  "CNN": {
+    "MNIST": "models.cnn_models.CNN.CNN_MNIST",
+    "CIFAR10": "models.cnn_models.CNN.CNN_CIFAR10",
+    "TinyImageNet": "models.cnn_models.CNN.CNN_TinyImageNet"
+  },
+  "NiN": {
+    "MNIST": "models.cnn_models.NiN.NiN_MNIST",
+    "CIFAR10": "models.cnn_models.NiN.NiN_CIFAR10",
+    "TinyImageNet": "models.cnn_models.NiN.NiN_TinyImageNet"
+  },
+  "AlexNet": {
+    "MNIST": "models.cnn_models.AlexNet.AlexNet_MNIST",
+    "CIFAR10": "models.cnn_models.AlexNet.AlexNet_CIFAR10",
+    "TinyImageNet": "models.cnn_models.AlexNet.AlexNet_TinyImageNet"
+  },
+  "GoogLeNet": {
+    "MNIST": "models.cnn_models.GoogLeNet.GoogLeNet_MNIST",
+    "CIFAR10": "models.cnn_models.GoogLeNet.GoogLeNet_CIFAR10",
+    "TinyImageNet": "models.cnn_models.GoogLeNet.GoogLeNet_TinyImageNet"
+  },
+  "ResNet18": {
+    "MNIST": "models.cnn_models.ResNet.ResNet18_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.ResNet18_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.ResNet18_TinyImageNet"
+  },
+  "ResNet34": {
+    "MNIST": "models.cnn_models.ResNet.ResNet34_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.ResNet34_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.ResNet34_TinyImageNet"
+  },
+  "ResNet50": {
+    "MNIST": "models.cnn_models.ResNet.ResNet50_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.ResNet50_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.ResNet50_TinyImageNet"
+  },
+  "ResNet101": {
+    "MNIST": "models.cnn_models.ResNet.ResNet101_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.ResNet101_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.ResNet101_TinyImageNet"
+  },
+  "ResNet152": {
+    "MNIST": "models.cnn_models.ResNet.ResNet152_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.ResNet152_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.ResNet152_TinyImageNet"
+  },
+  "SEResNet18": {
+    "MNIST": "models.cnn_models.ResNet.SEResNet18_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.ResNet18_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.ResNet18_TinyImageNet"
+  },
+  "SEResNet34": {
+    "MNIST": "models.cnn_models.ResNet.SEResNet34_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.SEResNet34_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.SEResNet34_TinyImageNet"
+  },
+  "SEResNet50": {
+    "MNIST": "models.cnn_models.ResNet.SEResNet50_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.SEResNet50_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.SEResNet50_TinyImageNet"
+  },
+  "SEResNet101": {
+    "MNIST": "models.cnn_models.ResNet.SEResNet101_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.SEResNet101_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.SEResNet101_TinyImageNet"
+  },
+  "SEResNet152": {
+    "MNIST": "models.cnn_models.ResNet.SEResNet152_MNIST",
+    "CIFAR10": "models.cnn_models.ResNet.SEResNet152_CIFAR10",
+    "TinyImageNet": "models.cnn_models.ResNet.SEResNet152_TinyImageNet"
+  },
+  "VGG11": {
+    "MNIST": "models.cnn_models.VGG.VGG11_MNIST",
+    "CIFAR10": "models.cnn_models.VGG.VGG11_CIFAR10",
+    "TinyImageNet": "models.cnn_models.VGG.VGG11_TinyImageNet"
+  },
+  "VGG13": {
+    "MNIST": "models.cnn_models.VGG.VGG13_MNIST",
+    "CIFAR10": "models.cnn_models.VGG.VGG13_CIFAR10",
+    "TinyImageNet": "models.cnn_models.VGG.VGG13_TinyImageNet"
+  },
+  "VGG16": {
+    "MNIST": "models.cnn_models.VGG.VGG16_MNIST",
+    "CIFAR10": "models.cnn_models.VGG.VGG16_CIFAR10",
+    "TinyImageNet": "models.cnn_models.VGG.VGG16_TinyImageNet"
+  },
+  "VGG19": {
+    "MNIST": "models.cnn_models.VGG.VGG19_MNIST",
+    "CIFAR10": "models.cnn_models.VGG.VGG19_CIFAR10",
+    "TinyImageNet": "models.cnn_models.VGG.VGG19_TinyImageNet"
+  },
+
+
+  "MyRNN": {
+    "TimeMachine": "models.rnn_models.MyRNN.MyRNN_TimeMachine"
+  },
+  "RNN": {
+    "TimeMachine": "models.rnn_models.RNN.RNN_TimeMachine",
+    "FunctionValue": "models.rnn_models.RNN.RNN_FunctionValue",
+    "HAR": "models.rnn_models.RNN.RNN_HAR"
+  },
+  "BiRNN": {
+    "HAR": "models.rnn_models.RNN.BiRNN_HAR"
+  },
+  "ResidualRNN": {
+    "HAR": "models.rnn_models.RNN.ResidualRNN_HAR"
+  },
+  "BiResidualRNN": {
+    "HAR": "models.rnn_models.RNN.BiResidualRNN_HAR"
+  },
+
+  "LSTM": {
+    "HAR": "models.rnn_models.LSTM.LSTM_HAR"
+  },
+  "BiLSTM": {
+    "HAR": "models.rnn_models.LSTM.BiLSTM_HAR"
+  },
+  "ResidualLSTM": {
+    "HAR": "models.rnn_models.LSTM.ResidualLSTM_HAR"
+  },
+  "BiResidualLSTM": {
+    "HAR": "models.rnn_models.LSTM.BiResidualLSTM_HAR"
+  },
+  "AttentionLSTM": {
+    "HAR": "models.rnn_models.LSTM.AttentionLSTM_HAR"
+  },
+
+  "GRU": {
+    "HAR": "models.rnn_models.GRU.GRU_HAR"
+  },
+  "BiGRU": {
+    "HAR": "models.rnn_models.GRU.BiGRU_HAR"
+  },
+  "ResidualGRU": {
+    "HAR": "models.rnn_models.GRU.ResidualGRU_HAR"
+  },
+  "BiResidualGRU": {
+    "HAR": "models.rnn_models.GRU.BiResidualGRU_HAR"
+  }
+}
