@@ -38,6 +38,7 @@ def cnn_train(args):
 
     ################################ Param Init ######################################
     model = init_model(args)
+
     # model = torchvision.models.resnet18(pretrained=True)
 
     train_data, test_data = init_dataset(args)
@@ -56,6 +57,7 @@ def cnn_train(args):
     if args.device != 'cpu' and torch.cuda.is_available():  # parallel trainning mode
         model = model.cuda()
         model = torch.nn.DataParallel(model, device_ids=gpus)
+        model.to(f'cuda:{gpus[0]}')
     ##################################################################################
 
     ################################ Trainning Section ###############################

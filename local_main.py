@@ -52,6 +52,15 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
 
+    args.model_type = 'cnn'
+    args.model = 'Transformer'
+    args.dataset = 'CIFAR10'
+    args.train_bsz = 64
+    args.test_bsz = 64
+    args.epochs = 300
+
+    args.lr = 0.01
+
     if args.model_type == 'cnn':
         cnn_train(args)
     elif args.model_type == 'rnn':

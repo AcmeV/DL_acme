@@ -7,6 +7,7 @@
   "CNN": {
     "MNIST": "models.cnn_models.CNN.CNN_MNIST",
     "CIFAR10": "models.cnn_models.CNN.CNN_CIFAR10",
+    "CIFAR100": "models.cnn_models.CNN.CNN_CIFAR100",
     "TinyImageNet": "models.cnn_models.CNN.CNN_TinyImageNet"
   },
   "NiN": {
@@ -27,71 +28,85 @@
   "ResNet18": {
     "MNIST": "models.cnn_models.ResNet.ResNet18_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.ResNet18_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.ResNet18_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.ResNet18_TinyImageNet"
   },
   "ResNet34": {
     "MNIST": "models.cnn_models.ResNet.ResNet34_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.ResNet34_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.ResNet34_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.ResNet34_TinyImageNet"
   },
   "ResNet50": {
     "MNIST": "models.cnn_models.ResNet.ResNet50_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.ResNet50_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.ResNet50_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.ResNet50_TinyImageNet"
   },
   "ResNet101": {
     "MNIST": "models.cnn_models.ResNet.ResNet101_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.ResNet101_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.ResNet101_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.ResNet101_TinyImageNet"
   },
   "ResNet152": {
     "MNIST": "models.cnn_models.ResNet.ResNet152_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.ResNet152_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.ResNet152_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.ResNet152_TinyImageNet"
   },
   "SEResNet18": {
     "MNIST": "models.cnn_models.ResNet.SEResNet18_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.ResNet18_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.ResNet18_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.ResNet18_TinyImageNet"
   },
   "SEResNet34": {
     "MNIST": "models.cnn_models.ResNet.SEResNet34_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.SEResNet34_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.SEResNet34_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.SEResNet34_TinyImageNet"
   },
   "SEResNet50": {
     "MNIST": "models.cnn_models.ResNet.SEResNet50_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.SEResNet50_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.SEResNet50_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.SEResNet50_TinyImageNet"
   },
   "SEResNet101": {
     "MNIST": "models.cnn_models.ResNet.SEResNet101_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.SEResNet101_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.SEResNet101_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.SEResNet101_TinyImageNet"
   },
   "SEResNet152": {
     "MNIST": "models.cnn_models.ResNet.SEResNet152_MNIST",
     "CIFAR10": "models.cnn_models.ResNet.SEResNet152_CIFAR10",
+    "CIFAR100": "models.cnn_models.ResNet.SEResNet152_CIFAR100",
     "TinyImageNet": "models.cnn_models.ResNet.SEResNet152_TinyImageNet"
   },
   "VGG11": {
     "MNIST": "models.cnn_models.VGG.VGG11_MNIST",
     "CIFAR10": "models.cnn_models.VGG.VGG11_CIFAR10",
+    "CIFAR100": "models.cnn_models.VGG.VGG11_CIFAR100",
     "TinyImageNet": "models.cnn_models.VGG.VGG11_TinyImageNet"
   },
   "VGG13": {
     "MNIST": "models.cnn_models.VGG.VGG13_MNIST",
     "CIFAR10": "models.cnn_models.VGG.VGG13_CIFAR10",
+    "CIFAR100": "models.cnn_models.VGG.VGG13_CIFAR100",
     "TinyImageNet": "models.cnn_models.VGG.VGG13_TinyImageNet"
   },
   "VGG16": {
     "MNIST": "models.cnn_models.VGG.VGG16_MNIST",
     "CIFAR10": "models.cnn_models.VGG.VGG16_CIFAR10",
+    "CIFAR100": "models.cnn_models.VGG.VGG16_CIFAR100",
     "TinyImageNet": "models.cnn_models.VGG.VGG16_TinyImageNet"
   },
   "VGG19": {
     "MNIST": "models.cnn_models.VGG.VGG19_MNIST",
     "CIFAR10": "models.cnn_models.VGG.VGG19_CIFAR10",
+    "CIFAR100": "models.cnn_models.VGG.VGG19_CIFAR100",
     "TinyImageNet": "models.cnn_models.VGG.VGG19_TinyImageNet"
   },
 
@@ -131,15 +146,26 @@
   },
 
   "GRU": {
-    "HAR": "models.rnn_models.GRU.GRU_HAR"
+    "HAR": "models.rnn_models.GRU.GRU_HAR",
+    "FRA_ENG": "models.seq2seq.GRU.GRUEncoderDecoder_FRA_ENG"
   },
   "BiGRU": {
-    "HAR": "models.rnn_models.GRU.BiGRU_HAR"
+    "HAR": "models.rnn_models.GRU.BiGRU_HAR",
+    "FRA_ENG": "models.seq2seq.GRU.BiGRUEncoderDecoder_FRA_ENG"
   },
   "ResidualGRU": {
     "HAR": "models.rnn_models.GRU.ResidualGRU_HAR"
   },
   "BiResidualGRU": {
     "HAR": "models.rnn_models.GRU.BiResidualGRU_HAR"
+  },
+  "AttentionGRU": {
+    "FRA_ENG": "models.seq2seq.GRU.AttentionGRUEncoderDecoder_FRA_ENG"
+  },
+  "Transformer": {
+    "FRA_ENG": "models.seq2seq.transformer.Transformer_FRA_ENG",
+    "CIFAR10": "models.Transformer.Transformer_CIFAR10",
+    "MNIST": "models.Transformer.Transformer_MNIST",
+    "TinyImageNet": "models.Transformer.Transformer_TinyImageNet"
   }
 }

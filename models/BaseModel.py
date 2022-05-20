@@ -2,6 +2,7 @@ import torch
 from torch import nn
 
 class BaseModel(nn.Module):
+
     def get_weights(self):
         return {k: v.cpu() for k, v in self.state_dict().items()}
 

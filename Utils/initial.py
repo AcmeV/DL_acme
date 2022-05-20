@@ -5,6 +5,7 @@ import torch
 import models
 import torchvision
 
+from Utils.dataset.FRA_ENG import FRA_ENG
 from Utils.dataset.FunctionValue import FunctionValue, gen_function_value
 from Utils.dataset.HAR import HAR
 from Utils.dataset.TimeMachine import load_data_time_machine
@@ -19,7 +20,8 @@ def init_model(args):
         model_name = f'{args.model}{args.model_version}'
         return eval(f'{config_dict[model_name][args.dataset]}()')
     else:
-        return eval(f'{config_dict[args.model][args.dataset]}()')
+        f = config_dict[args.model][args.dataset]
+        return eval(f'{f}()')
 
 def init_dataset(args):
     if args.dataset == 'MNIST':
@@ -35,6 +37,15 @@ def init_dataset(args):
         train_data = torchvision.datasets.CIFAR10(root=f'{args.data_dir}', train=True,
                                                 download=True, transform=torchvision.transforms.ToTensor())
         test_data = torchvision.datasets.CIFAR10(root=f'{args.data_dir}', train=False,
+                                               download=True, transform=torchvision.transforms.ToTensor())
+        train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=True)
+        test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
+
+        return train_loader, test_loader
+    elif args.dataset == 'CIFAR100':
+        train_data = torchvision.datasets.CIFAR100(root=f'{args.data_dir}', train=True,
+                                                download=True, transform=torchvision.transforms.ToTensor())
+        test_data = torchvision.datasets.CIFAR100(root=f'{args.data_dir}', train=False,
                                                download=True, transform=torchvision.transforms.ToTensor())
         train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=True)
         test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
@@ -71,3 +82,12 @@ def init_dataset(args):
         test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
 
         return train_loader, test_loader
+    elif args.dataset == 'FRA_ENG':
+
+        train_data = FRA_ENG(args.data_dir, train=True)
+        test_data = FRA_ENG(args.data_dir, train=False)
+
+        train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.train_bsz, shuffle=False)
+        test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.test_bsz, shuffle=False)
+
+        return train_loader, test_loader, train_data.eng_vocab, train_data.fra_vocab

@@ -164,6 +164,7 @@ def rnn_train(args):
     model.to(device)
     ##################################################################################
     best_model = copy.deepcopy(model)
+
     for epoch in range(int(args.epochs)):
         best_acc = 0.
 
